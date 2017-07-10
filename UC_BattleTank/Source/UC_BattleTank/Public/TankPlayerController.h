@@ -16,11 +16,13 @@ class UC_BATTLETANK_API ATankPlayerController : public APlayerController
 	GENERATED_BODY()
 
 private:
-	void BeginPlay() override;
-	ATank* controlledTank;
+	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
 
-public:
+	ATank* controlledTank;
 	ATank* GetControlledTank() const;
-	
+
+	// Aim tank, so that a shot will hit, where the crosshair points to
+	void AimTowardsCrosshair();
 
 };

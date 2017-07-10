@@ -2,6 +2,8 @@
 
 #include "TankPlayerController.h"
 
+
+
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
@@ -17,9 +19,22 @@ void ATankPlayerController::BeginPlay()
 	UE_LOG(LogTemp, Warning, TEXT("Player controller possesing Tank: %s"), *name);
 }
 
-ATank* ATankPlayerController::GetControlledTank() const 
+void ATankPlayerController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	AimTowardsCrosshair();
+}
+
+ATank* ATankPlayerController::GetControlledTank() const
 {
 	return Cast<ATank>(GetPawn());
 }
 
+void ATankPlayerController::AimTowardsCrosshair()
+{
+	if (!controlledTank) { return; }
 
+	FVector hitLocation;
+	//Get location with raycast through crosshair
+	//If a location was found aim at it
+}
