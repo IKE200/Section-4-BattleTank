@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankPlayerController.h"
+#include "Engine.h"
 
 
 
@@ -34,7 +35,23 @@ void ATankPlayerController::AimTowardsCrosshair()
 {
 	if (!controlledTank) { return; }
 
-	FVector hitLocation;
-	//Get location with raycast through crosshair
+	FVector outHitLocation;
+	if (GetSightRayHitLocation(outHitLocation))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Player aims at: %s"), *outHitLocation.ToString())
+	}
+	else 
+	{
+		UE_LOG(LogTemp, Warning, TEXT("No Hitsolution found."))
+	}
+	
+	
 	//If a location was found aim at it
+}
+
+//Get location with raycast through crosshair
+bool ATankPlayerController::GetSightRayHitLocation(FVector& outHitLocation) const
+{
+	outHitLocation = FVector(1.0);
+	return true;
 }

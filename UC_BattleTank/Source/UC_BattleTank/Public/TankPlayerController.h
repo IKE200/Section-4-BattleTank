@@ -24,5 +24,6 @@ private:
 
 	// Aim tank, so that a shot will hit, where the crosshair points to
 	void AimTowardsCrosshair();
+	bool GetSightRayHitLocation(FVector& outHitLocation) const;
 
 };
