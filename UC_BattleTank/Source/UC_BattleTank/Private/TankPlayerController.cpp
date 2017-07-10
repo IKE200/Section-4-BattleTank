@@ -14,7 +14,7 @@ void ATankPlayerController::BeginPlay()
 	}
 	FString name;
 	name = controlledTank->GetName();
-	UE_LOG(LogTemp, Warning, TEXT("Plaer controller possesing Tank: %s"), *name);
+	UE_LOG(LogTemp, Warning, TEXT("Player controller possesing Tank: %s"), *name);
 }
 
 ATank* ATankPlayerController::GetControlledTank() const 

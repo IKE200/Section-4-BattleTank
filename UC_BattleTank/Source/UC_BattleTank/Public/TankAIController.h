@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Engine.h"
 #include "Tank.h"
 #include "CoreMinimal.h"
 #include "AIController.h"
@@ -18,8 +19,8 @@ class UC_BATTLETANK_API ATankAIController : public AAIController
 private:
 	void BeginPlay() override;
 	ATank* controlledTank;
-	
-public:
+	ATank* playerTank;
 	ATank* GetControlledTank() const;
+	ATank* GetPlayerTank() const;
 	
 };
