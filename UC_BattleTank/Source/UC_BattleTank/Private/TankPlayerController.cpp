@@ -35,14 +35,14 @@ void ATankPlayerController::AimTowardsCrosshair()
 {
 	if (!controlledTank) { return; }
 
-	FVector outHitLocation;
-	if (GetSightRayHitLocation(outHitLocation))
+	FVector OutHitLocation;
+	if (GetSightRayHitLocation(OutHitLocation))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Player aims at: %s"), *outHitLocation.ToString())
+		UE_LOG(LogTemp, Warning, TEXT("Player aims at: %s"), *OutHitLocation.ToString());
 	}
 	else 
 	{
-		UE_LOG(LogTemp, Warning, TEXT("No Hitsolution found."))
+		UE_LOG(LogTemp, Warning, TEXT("Player aims at: %s"), *OutHitLocation.ToString());
 	}
 	
 	
@@ -50,8 +50,46 @@ void ATankPlayerController::AimTowardsCrosshair()
 }
 
 //Get location with raycast through crosshair
-bool ATankPlayerController::GetSightRayHitLocation(FVector& outHitLocation) const
+bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) const
 {
-	outHitLocation = FVector(1.0);
-	return true;
+	int32 ViewportSizeX;
+	int32 ViewportSizeY;
+
+	GetViewportSize(ViewportSizeX, ViewportSizeY);
+
+	FVector2D ScreenLocation = FVector2D(ViewportSizeX * CrossHairXLocation, ViewportSizeY * CrossHairYLocation);
+	FVector LookDirection;
+
+	if (GetLookDirection(ScreenLocation, LookDirection))
+	{
+		return GetLookVectorHitLocation(OutHitLocation, LookDirection);
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const
+{
+	FVector CameraLocation;
+	return DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, CameraLocation, LookDirection);
+}
+
+bool ATankPlayerController::GetLookVectorHitLocation(FVector& OutHitLocation, FVector LookDirection) const
+{
+	FHitResult OutHitResult;
+	FVector StartLocation = PlayerCameraManager->GetCameraLocation();
+	FVector EndLocation = StartLocation + LookDirection * LineTraceRange;
+
+	if (GetWorld()->LineTraceSingleByChannel(OutHitResult, StartLocation, EndLocation, ECC_Visibility))
+	{
+		OutHitLocation = OutHitResult.Location;
+		return true;
+	}
+	else
+	{
+		OutHitLocation = FVector(0);
+		return false;
+	}
 }
