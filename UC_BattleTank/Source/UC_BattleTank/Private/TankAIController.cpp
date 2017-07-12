@@ -25,6 +25,15 @@ void ATankAIController::BeginPlay()
 	UE_LOG(LogTemp, Warning, TEXT("TankAIController %s found player %s"), *name, *playerTank->GetName());
 }
 
+void ATankAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	if (playerTank)
+	{
+		controlledTank->AimAt(playerTank->GetActorLocation());
+	}
+}
+
 ATank* ATankAIController::GetControlledTank() const
 {
 	return Cast<ATank>(GetPawn());
