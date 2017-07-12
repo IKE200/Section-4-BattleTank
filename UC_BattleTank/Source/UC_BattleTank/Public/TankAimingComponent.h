@@ -3,9 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Engine/Engine.h"
 #include "Components/ActorComponent.h"
 #include "TankAimingComponent.generated.h"
-
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class UC_BATTLETANK_API UTankAimingComponent : public UActorComponent
@@ -14,7 +14,7 @@ class UC_BATTLETANK_API UTankAimingComponent : public UActorComponent
 
 public:	
 	
-	void AimAt(FVector TargetLocation);
+	void AimAt(FVector TargetLocation, float LaunchSpeed);
 
 	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
 

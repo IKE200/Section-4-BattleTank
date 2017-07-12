@@ -21,6 +21,9 @@ public:
 
 private:
 
+	UPROPERTY(EditAnywhere)
+		float LaunchSpeed = 10000;
+
 	// Sets default values for this pawn's properties
 	ATank();
 

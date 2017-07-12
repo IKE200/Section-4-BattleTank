@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankAimingComponent.h"
-#include "Engine.h"
+#include "Components/SceneComponent.h"
 
 
 void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent * BarrelToSet)
@@ -19,7 +19,7 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
-void UTankAimingComponent::AimAt(FVector TargetLocation)
+void UTankAimingComponent::AimAt(FVector TargetLocation, float LaunchSpeed)
 {
 	FString Name = GetOwner()->GetName();
 	FVector BarrelLocation = Barrel->GetComponentLocation();
