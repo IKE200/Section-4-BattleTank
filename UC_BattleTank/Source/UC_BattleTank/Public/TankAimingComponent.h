@@ -4,9 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "Engine/Engine.h"
+#include "Components/StaticMeshComponent.h"
 #include "Components/ActorComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "TankAimingComponent.generated.h"
 
+class UTankBarrel;
+
+// Component to find Hitsolutions for a Tank
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class UC_BATTLETANK_API UTankAimingComponent : public UActorComponent
 {
@@ -16,20 +21,16 @@ public:
 	
 	void AimAt(FVector TargetLocation, float LaunchSpeed);
 
-	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
+	void SetBarrelReference(UTankBarrel* BarrelToSet);
 
 private:
 
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
-	// Called when the game starts
-	virtual void BeginPlay() override;
+	void MoveBarrelTowards(FVector AimDirection);
 
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-	UStaticMeshComponent* Barrel = nullptr;
+	UTankBarrel* Barrel = nullptr;
 
 		
 	
